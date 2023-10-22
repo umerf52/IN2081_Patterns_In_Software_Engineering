@@ -1,0 +1,36 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.0.2'
+    id "io.spring.dependency-management" version "1.1.0"
+}
+
+apply plugin: 'java'
+group = 'de.tum.in.ase.pse'
+sourceCompatibility = 17
+version = '1.0.0'
+compileJava.options.encoding = 'UTF-8'
+compileTestJava.options.encoding = 'UTF-8'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    //implementation project(path: ':OperatorService')
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
+}
+
+sourceSets{
+    main {
+        java {
+            srcDir 'src'
+        }
+    }
+}
+
+test {
+    useJUnitPlatform()
+}

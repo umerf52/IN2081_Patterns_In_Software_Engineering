@@ -1,0 +1,65 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.13'
+    id 'org.springframework.boot' version '2.7.3'
+    id 'io.spring.dependency-management' version '1.0.13.RELEASE'
+}
+
+group = 'de.tum.in.ase.pse'
+version = '1.0.0'
+sourceCompatibility = 17
+compileJava.options.encoding = 'UTF-8'
+
+repositories {
+    mavenCentral()
+}
+
+configurations {
+    serverImplementation.extendsFrom(implementation)
+    clientImplementation.extendsFrom(implementation)
+}
+
+dependencies {
+    serverImplementation 'org.springframework.boot:spring-boot-starter-web'
+
+    clientImplementation 'org.springframework.boot:spring-boot-starter-webflux'
+}
+
+javafx {
+    version = '17.0.2'
+    modules = [ 'javafx.base', 'javafx.controls', 'javafx.fxml', 'javafx.media' ]
+    configuration = 'clientImplementation'
+}
+
+sourceSets {
+    common {
+        java {
+            srcDir 'src/common/java'
+        }
+    }
+    server {
+        java {
+            srcDir 'src/server/java'
+        }
+        resources {
+            srcDir 'src/server/resources'
+        }
+        compileClasspath += common.output
+        runtimeClasspath += common.output
+    }
+    client {
+        java {
+            srcDir 'src/client/java'
+        }
+        resources {
+            srcDir 'src/client/resources'
+        }
+        compileClasspath += common.output
+        runtimeClasspath += common.output
+    }
+}
+
+processServerResources {
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+}
